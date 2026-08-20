@@ -7,11 +7,22 @@ let app;
 let Category;
 let Event;
 
+// Use a locally installed MongoDB binary instead of downloading one over the network.
+// Falls back to the memory server's default download if the path is unavailable.
+const SYSTEM_MONGOD = 'C:\\Program Files\\MongoDB\\Server\\7.0\\bin\\mongod.exe';
+const fs = require('fs');
+if (fs.existsSync(SYSTEM_MONGOD)) {
+  process.env.MONGOMS_SYSTEM_BINARY = SYSTEM_MONGOD;
+  process.env.MONGOMS_VERSION = '7.0.0';
+}
+
 beforeAll(async () => {
   process.env.JWT_SECRET = 'test_secret';
   process.env.NODE_ENV = 'test';
 
-  mongod = await MongoMemoryServer.create();
+  mongod = await MongoMemoryServer.create({
+    instance: { storageEngine: 'wiredTiger', launchTimeout: 40000 },
+  });
   await mongoose.connect(mongod.getUri());
 
   // require app AFTER setting env vars and connecting, so config picks them up
