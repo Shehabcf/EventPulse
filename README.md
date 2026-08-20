@@ -30,6 +30,9 @@ Default seeded admin: `admin@eventpulse.com` / `Admin@1234`
 |---|---|---|
 | POST | /api/auth/register | Public |
 | POST | /api/auth/login | Public |
+| GET | /api/categories | Public |
+| POST | /api/categories | Admin |
+| GET/PATCH/DELETE | /api/categories/:id | Public GET, Admin write |
 | GET | /api/events | Public |
 | POST | /api/events | Admin |
 | GET/PATCH/DELETE | /api/events/:id | Public GET, Admin write |
