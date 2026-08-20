@@ -21,7 +21,7 @@ beforeAll(async () => {
   process.env.NODE_ENV = 'test';
 
   mongod = await MongoMemoryServer.create({
-    instance: { storageEngine: 'wiredTiger', launchTimeout: 40000 },
+    instance: { storageEngine: 'wiredTiger', launchTimeout: 90000 },
   });
   await mongoose.connect(mongod.getUri());
 

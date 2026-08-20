@@ -27,6 +27,17 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
 
+// Root landing — makes the base URL respond instead of falling through to 404
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    service: 'EventPulse API',
+    version: '1.0.0',
+    docs: '/api-docs',
+    health: '/health',
+  });
+});
+
 // Unhandled routes
 app.all('*', (req, res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
